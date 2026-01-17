@@ -201,6 +201,44 @@ class Navigator(
         return currentStack.size > 1 || state.topLevelRoute != state.startRoute
     }
 
+    /**
+     * Navigates to the root of current top-level destination.
+     * Clears all detail screens (MovieDetail, TvShowDetail, PersonDetail) from the stack.
+     *
+     * Use this when user wants to "close" detail views and return to the list screen.
+     *
+     * @return true if navigation was performed (there were screens to remove)
+     */
+    fun navigateToRoot(): Boolean {
+        val currentStack = state.backStacks[state.topLevelRoute]
+            ?: error("Back stack for ${state.topLevelRoute} doesn't exist")
+
+        // Check if there are detail screens to remove
+        if (currentStack.size <= 1) {
+            return false
+        }
+
+        // Keep only the first entry (top-level route)
+        val rootEntry = currentStack.first()
+        currentStack.clear()
+        currentStack.add(rootEntry)
+
+        // Reset detail state
+        currentDetailId = null
+        currentPersonId = null
+        detailHistory.clear()
+
+        return true
+    }
+
+    /**
+     * Checks if we can navigate to root (there are detail screens in the stack).
+     */
+    fun canNavigateToRoot(): Boolean {
+        val currentStack = state.backStacks[state.topLevelRoute] ?: return false
+        return currentStack.size > 1
+    }
+
     private data class DetailHistoryRecord(
         val detailId: String,
         val wasFromCrossReference: Boolean

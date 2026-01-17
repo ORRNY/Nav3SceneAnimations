@@ -158,6 +158,11 @@ fun NavigationRoot(
                             onTvShowClick = { tvShowId ->
                                 navigator.navigate(Route.TvShowDetail(tvShowId))
                             },
+                            currentTopLevelRoute = navigationState.topLevelRoute as? Route,
+                            onNavigateToTopLevel = { topLevelRoute ->
+                                navigator.navigate(topLevelRoute)
+                            },
+                            onCloseClick = { navigator.navigateToRoot() },
                             modifier = screenModifier,
                             showBackButton = true
                         )
@@ -178,6 +183,11 @@ fun NavigationRoot(
                             onMovieClick = { movieId ->
                                 navigator.navigate(Route.MovieDetail(movieId))
                             },
+                            currentTopLevelRoute = navigationState.topLevelRoute as? Route,
+                            onNavigateToTopLevel = { topLevelRoute ->
+                                navigator.navigate(topLevelRoute)
+                            },
+                            onCloseClick = { navigator.navigateToRoot() },
                             modifier = screenModifier,
                             showBackButton = true
                         )
@@ -206,6 +216,11 @@ fun NavigationRoot(
                                     fromExtraPane = true
                                 )
                             },
+                            currentTopLevelRoute = navigationState.topLevelRoute as? Route,
+                            onNavigateToTopLevel = { topLevelRoute ->
+                                navigator.navigate(topLevelRoute)
+                            },
+                            onCloseClick = { navigator.navigateToRoot() },
                             modifier = screenModifier,
                             showBackButton = true
                         )
